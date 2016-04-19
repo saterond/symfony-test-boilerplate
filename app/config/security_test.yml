@@ -1,0 +1,21 @@
+security:
+
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+
+    providers:
+        db_provider:
+            entity:
+                class: AppBundle:User
+                property: email
+
+    firewalls:
+        main:
+            pattern: ^/secured-area
+            http_basic: true
+            stateless: false
+
+    access_control:
+        - { path: ^/secured-area/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/secured-area, roles: ROLE_USER }

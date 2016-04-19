@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="well">
+        <h1>Application with test bootstrap</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            {% for article in articles %}
+                <h1>{{ article.title }}</h1>
+                <p><i>Created: {{ article.datetimeCreated|date("j.n.Y H:i") }}</i></p>
+                <p>{{ article.contents }}</p>
+                {% if not loop.last %}<hr>{% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+
+    providers:
+        db_provider:
+            entity:
+                class: AppBundle:User
+                property: email
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern: ^/secured-area
+            anonymous: ~
+            provider: db_provider
+            form_login:
+                login_path: /secured-area/login
+                check_path: /secured-area/login_check
+            logout:
+                path:   /logout
+                target: /
+
+    access_control:
+        - { path: ^/secured-area/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/secured-area, roles: ROLE_USER }
